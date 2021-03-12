@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"github.com/libp2p/go-libp2p-kad-dht/qpeerset"
 	"sync"
 	"time"
 
@@ -15,7 +16,7 @@ import (
 	"github.com/ipfs/go-cid"
 	u "github.com/ipfs/go-ipfs-util"
 	"github.com/libp2p/go-libp2p-kad-dht/internal"
-	"github.com/libp2p/go-libp2p-kad-dht/qpeerset"
+	internalConfig "github.com/libp2p/go-libp2p-kad-dht/internal/config"
 	kb "github.com/libp2p/go-libp2p-kbucket"
 	record "github.com/libp2p/go-libp2p-record"
 	"github.com/multiformats/go-multihash"
@@ -109,7 +110,7 @@ func (dht *IpfsDHT) GetValue(ctx context.Context, key string, opts ...routing.Op
 	if err := cfg.Apply(opts...); err != nil {
 		return nil, err
 	}
-	opts = append(opts, Quorum(getQuorum(&cfg, defaultQuorum)))
+	opts = append(opts, Quorum(internalConfig.GetQuorum(&cfg)))
 
 	responses, err := dht.SearchValue(ctx, key, opts...)
 	if err != nil {
@@ -145,7 +146,7 @@ func (dht *IpfsDHT) SearchValue(ctx context.Context, key string, opts ...routing
 
 	responsesNeeded := 0
 	if !cfg.Offline {
-		responsesNeeded = getQuorum(&cfg, defaultQuorum)
+		responsesNeeded = internalConfig.GetQuorum(&cfg)
 	}
 
 	stopCh := make(chan struct{})

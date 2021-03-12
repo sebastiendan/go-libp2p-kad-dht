@@ -3,6 +3,7 @@ package dht
 import (
 	"context"
 	"fmt"
+	"github.com/libp2p/go-libp2p-kad-dht/internal/net"
 	"math"
 	"math/rand"
 	"sync"
@@ -96,7 +97,7 @@ type IpfsDHT struct {
 	proc goprocess.Process
 
 	protoMessenger *pb.ProtocolMessenger
-	msgSender      *messageSenderImpl
+	msgSender      pb.MessageSender
 
 	plk sync.Mutex
 
@@ -188,11 +189,7 @@ func New(ctx context.Context, h host.Host, options ...Option) (*IpfsDHT, error) 
 	dht.disableFixLowPeers = cfg.disableFixLowPeers
 
 	dht.Validator = cfg.validator
-	dht.msgSender = &messageSenderImpl{
-		host:      h,
-		strmap:    make(map[peer.ID]*peerMessageSender),
-		protocols: dht.protocols,
-	}
+	dht.msgSender = net.NewMessageSenderImpl(h, dht.protocols)
 	dht.protoMessenger, err = pb.NewProtocolMessenger(dht.msgSender, pb.WithValidator(dht.Validator))
 	if err != nil {
 		return nil, err
