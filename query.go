@@ -14,8 +14,8 @@ import (
 	"github.com/libp2p/go-libp2p-core/routing"
 
 	"github.com/google/uuid"
-	"github.com/libp2p/go-libp2p-kad-dht/qpeerset"
 	kb "github.com/libp2p/go-libp2p-kbucket"
+	"github.com/sebastiendan/go-libp2p-kad-dht/qpeerset"
 )
 
 // ErrNoPeersQueried is returned when we failed to connect to any peers.

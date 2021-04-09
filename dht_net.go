@@ -10,8 +10,8 @@ import (
 	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-msgio/protoio"
 
-	"github.com/libp2p/go-libp2p-kad-dht/metrics"
-	pb "github.com/libp2p/go-libp2p-kad-dht/pb"
+	"github.com/sebastiendan/go-libp2p-kad-dht/metrics"
+	pb "github.com/sebastiendan/go-libp2p-kad-dht/pb"
 
 	"github.com/libp2p/go-msgio"
 	"go.opencensus.io/stats"
