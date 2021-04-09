@@ -58,7 +58,7 @@ const (
 )
 
 const (
-	kad1 protocol.ID = "/kad/1.0.0"
+	kad1 protocol.ID = "/sebsebseb/1.0.0"
 )
 
 const (
